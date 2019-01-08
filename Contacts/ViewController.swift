@@ -25,9 +25,33 @@ class ViewController: UITableViewController {
         ["Carl", "CJ", "Casey", "Cynthia"],
         ["Darnell", "David", "Doug"]
     ]
+    
+    @objc func handleShowIndexPath() {
+        print("Attempting reload animation of indexPaths...")
+        
+        // Build indexPaths we want to reload
+        var indexPathsToReload = [IndexPath]()
+        
+        for section in twoDimensionalArray.indices {
+            for row in twoDimensionalArray[section].indices {
+                print(section, row)
+                let indexPath = IndexPath(row: row, section: section)
+                indexPathsToReload.append(indexPath)
+            }
+        }
+        
+//        for index in twoDimensionalArray[0].indices {
+//            let indexPath = IndexPath(row: index, section: 0)
+//            indexPathsToReload.append(indexPath)
+//        }
+        
+        tableView.reloadRows(at: indexPathsToReload, with: .left)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Show IndexPath", style: .plain, target: self, action: #selector(handleShowIndexPath))
         
         navigationItem.title = "Contacts"
         navigationController?.navigationBar.prefersLargeTitles = true
