@@ -8,13 +8,67 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
+    
+    let cellID = "cellID"
+    
+    let names = [
+        "John", "Carter", "Ashley", "Shawn", "Anthony", "Ernie", "Henry", "Cynthia", "Tony", "Felicia", "Pamela", "Fatai", "Michelle"
+    ]
+    
+    let cNames = ["Carl", "CJ", "Casey", "Cynthia"]
+    
+    let dNames = ["Darnell", "David", "Doug"]
+    
+    let twoDimensionalArray = [
+        ["John", "Carter", "Ashley", "Shawn", "Anthony", "Ernie", "Henry", "Cynthia", "Tony", "Felicia", "Pamela", "Fatai", "Michelle"],
+        ["Carl", "CJ", "Casey", "Cynthia"],
+        ["Darnell", "David", "Doug"]
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        navigationItem.title = "Contacts"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
     }
-
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "Header"
+        label.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        return label
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return twoDimensionalArray.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return twoDimensionalArray[section].count
+//        if section == 0 {
+//            return names.count
+//        }
+//        return cNames.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        
+        // let name = names[indexPath.row]
+        
+//        let name = indexPath.section == 0 ? names[indexPath.row] : cNames[indexPath.row]
+        
+        let name = twoDimensionalArray[indexPath.section][indexPath.row]
+        
+        cell.textLabel?.text = name
+        
+        cell.textLabel?.text = "\(name) Section:\(indexPath.section) Row:\(indexPath.row)"
+        
+        return cell
+    }
 
 }
 
