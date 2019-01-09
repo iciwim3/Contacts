@@ -26,6 +26,8 @@ class ViewController: UITableViewController {
         ["Darnell", "David", "Doug"]
     ]
     
+    var showIndexPaths = true
+    
     @objc func handleShowIndexPath() {
         print("Attempting reload animation of indexPaths...")
         
@@ -45,7 +47,11 @@ class ViewController: UITableViewController {
 //            indexPathsToReload.append(indexPath)
 //        }
         
-        tableView.reloadRows(at: indexPathsToReload, with: .left)
+        showIndexPaths = !showIndexPaths
+        
+        let animationStyle = showIndexPaths ? UITableView.RowAnimation.right : .left
+        
+        tableView.reloadRows(at: indexPathsToReload, with: animationStyle)
     }
 
     override func viewDidLoad() {
@@ -89,8 +95,9 @@ class ViewController: UITableViewController {
         
         cell.textLabel?.text = name
         
-        cell.textLabel?.text = "\(name) Section:\(indexPath.section) Row:\(indexPath.row)"
-        
+        if showIndexPaths {
+            cell.textLabel?.text = "\(name) Section:\(indexPath.section) Row:\(indexPath.row)"
+        }
         return cell
     }
 
